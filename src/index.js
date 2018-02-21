@@ -32,6 +32,8 @@ function createAWithHref(hrefValue) {
  * @param {Element} where - куда вставлять
  */
 function prepend(what, where) {
+    var elem = document.createElement(what);
+    document.insertBefore(elem, where);
 }
 
 /**
@@ -162,11 +164,11 @@ function observeChildNodes(where, fn) {
 export {
     createDivWithText,
     createAWithHref,
-    //prepend,
+    prepend,
     findAllPSiblings,
     findError,
     deleteTextNodes,
     deleteTextNodesRecursive,
     collectDOMStat,
-    observeChildNodes
+    //observeChildNodes
 };

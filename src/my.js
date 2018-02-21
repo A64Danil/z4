@@ -29,3 +29,19 @@ function createAWithHref(hrefValue) {
 }
 
 createAWithHref("#");
+
+/**
+* Функция должна вставлять элемент what в начало элемента where
+*
+* @param {Element} what - что вставлять
+* @param {Element} where - куда вставлять
+*/
+function prepend(what, where) {
+    var elem = document.createElement(what);
+    elem.textContent = "Generated TAG";
+    //var wrap = document.getElementsByTagName(where);
+    var wrap = document.querySelector(where);
+    wrap.insertBefore(elem, wrap.children[0]);
+    return elem;
+}
+prepend("li", ".hints")
