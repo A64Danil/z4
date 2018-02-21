@@ -37,11 +37,29 @@ createAWithHref("#");
 * @param {Element} where - куда вставлять
 */
 function prepend(what, where) {
-    var elem = document.createElement(what);
-    elem.textContent = "Generated TAG";
+
+    var elem = what;
+    console.log(elem.nodeName);
+    //elem.textContent = "Generated TAG";
     //var wrap = document.getElementsByTagName(where);
     var wrap = document.querySelector(where);
-    wrap.insertBefore(elem, wrap.children[0]);
-    return elem;
+    console.log(wrap);
+    wrap.insertBefore(what, wrap.children[0]);
 }
-prepend("li", ".hints")
+prepend("<li>hello</li>", ".hints")
+
+function prepend(what, where) {
+    console.log("What");
+    console.log(what);
+    console.log("Where");
+    console.log(where);
+
+
+    //var elem = document.createElement();
+    //elem.textContent = "Generated TAG";
+
+    //where.insertBefore(what, where.children[0]);
+
+
+    //return wrap
+}
