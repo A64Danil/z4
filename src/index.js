@@ -51,6 +51,26 @@ function prepend(what, where) {
  * т.к. следующим соседом этих элементов является элемент с тегом P
  */
 function findAllPSiblings(where) {
+    //var elem = document.querySelector(where);
+    var i = -1;
+    var result = [];
+    function recursion() {
+        i++;
+        if (where.children[i] != where.lastElementChild) {
+            if (where.children[i].nextElementSibling.tagName == "P") {
+                result.push(where.children[i]);
+
+            }
+            recursion();
+        }
+        else
+        {
+            console.log(i + "i(последний): " + (where.children[i] == where.lastElementChild));
+        }
+    }
+    recursion();
+
+    return result;
 }
 
 /**

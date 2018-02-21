@@ -56,19 +56,6 @@ function prepend(what, where) {
  * функция должна вернуть: [div, span]
  * т.к. следующим соседом этих элементов является элемент с тегом P
  */
-//console.log(elem);
-//console.log(elem.children[27] == undefined);
-//console.log(elem.children[25] == elem.lastElementChild);
-//console.log(elem.children[26] == undefined);
-//console.log(elem.lastElementChild);
-// if (elem.children[i].nextElementSibling === ) {}
-//console.log(elem.children[i].nextElementSibling);
-//console.log(elem.children[i].nextElementSibling.tagName);
-
-// for (var i = 0; i <= 26; i++) {
-//     console.log(elem.children[i]);
-// }
-
 function findAllPSiblings(where) {
     var elem = document.querySelector(where);
     console.log(elem);
@@ -79,6 +66,8 @@ function findAllPSiblings(where) {
         i++;
         if (elem.children[i] != elem.lastElementChild) {
             console.log(i + "i: " + (elem.children[i] == elem.lastElementChild));
+            console.log(elem.children[i].nextElementSibling);
+            console.log(elem.children[i].nextElementSibling.tagName);
             recursion();
         }
         else
@@ -92,4 +81,45 @@ function findAllPSiblings(where) {
 }
 
 findAllPSiblings(".hints");
+// Clear Varianr
+function CLRfindAllPSiblings(where) {
+    var elem = document.querySelector(where);
+    var i = -1;
+    var result = [];
+    function recursion() {
+        i++;
+        if (elem.children[i] != elem.lastElementChild) {
+            if (elem.children[i].nextElementSibling.tagName == "LI") {
+                result.push(elem.children[i].tagName);
+            }
+            recursion();
+        }
+        else
+        {
+            console.log(i + "i(последний): " + (elem.children[i] == elem.lastElementChild));
+        }
+    }
+    recursion();
 
+    return result;
+}
+//CLRfindAllPSiblings(".hints");
+/**
+ * Функция должна перебрать все дочерние узлы типа "элемент" внутри where
+ * и вернуть массив, состоящий из текстового содержимого перебираемых элементов
+ * Но похоже, что в код закралась ошибка, которую нужно найти и исправить
+ *
+ * @param {Element} where - где искать
+ * @return {Array<string>}
+ */
+function findError(where) {
+    /*
+     var result = [];
+
+     for (var i = 0; i < where.childNodes.length; i++) {
+     result.push(where.childNodes[i].innerText);
+     }
+
+     return result;
+     */
+}
