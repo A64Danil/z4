@@ -7,6 +7,10 @@
  * @return {Element}
  */
 function createDivWithText(text) {
+    var elem = document.createElement('div');
+    elem.textContent(text);
+    //console.log(elem);
+    return elem;
 }
 
 /**
@@ -16,7 +20,11 @@ function createDivWithText(text) {
  * @return {Element}
  */
 function createAWithHref(hrefValue) {
+    var elem = document.createElement('a');
+    elem.setAttribute("href", hrefValue);
+    return elem;
 }
+
 
 /**
  * Функция должна вставлять элемент what в начало элемента where
