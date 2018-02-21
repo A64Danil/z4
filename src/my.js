@@ -56,6 +56,19 @@ function prepend(what, where) {
  * функция должна вернуть: [div, span]
  * т.к. следующим соседом этих элементов является элемент с тегом P
  */
+//console.log(elem);
+//console.log(elem.children[27] == undefined);
+//console.log(elem.children[25] == elem.lastElementChild);
+//console.log(elem.children[26] == undefined);
+//console.log(elem.lastElementChild);
+// if (elem.children[i].nextElementSibling === ) {}
+//console.log(elem.children[i].nextElementSibling);
+//console.log(elem.children[i].nextElementSibling.tagName);
+
+// for (var i = 0; i <= 26; i++) {
+//     console.log(elem.children[i]);
+// }
+
 function findAllPSiblings(where) {
     var elem = document.querySelector(where);
     console.log(elem);
@@ -104,6 +117,7 @@ function CLRfindAllPSiblings(where) {
     return result;
 }
 //CLRfindAllPSiblings(".hints");
+
 /**
  * Функция должна перебрать все дочерние узлы типа "элемент" внутри where
  * и вернуть массив, состоящий из текстового содержимого перебираемых элементов
@@ -113,13 +127,31 @@ function CLRfindAllPSiblings(where) {
  * @return {Array<string>}
  */
 function findError(where) {
-    /*
-     var result = [];
 
-     for (var i = 0; i < where.childNodes.length; i++) {
-     result.push(where.childNodes[i].innerText);
-     }
+    var my = document.querySelector(where);
+    var result = [];
+    console.log(my.children.length);
+    for (var i = 0; i < my.children.length; i++) {
+        result.push(my.children[i].innerText);
+    }
 
-     return result;
-     */
+    return result;
+
+}
+findError(".hints");
+
+/**
+ * Функция должна перебрать все дочерние узлы элемента where
+ * и удалить из него все текстовые узлы
+ * Без рекурсии!
+ * Будьте внимательны при удалении узлов,
+ * можно получить неожиданное поведение при переборе узлов
+ *
+ * @param {Element} where - где искать
+ *
+ * @example
+ * после выполнения функции, дерево <div></div>привет<p></p>loftchool!!!
+ * должно быть преобразовано в <div></div><p></p>
+ */
+function deleteTextNodes(where) {
 }
