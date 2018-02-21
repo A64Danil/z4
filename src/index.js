@@ -8,8 +8,7 @@
  */
 function createDivWithText(text) {
     var elem = document.createElement('div');
-    elem.textContent(text);
-    //console.log(elem);
+    elem.textContent = text;
     return elem;
 }
 
@@ -61,6 +60,7 @@ function findAllPSiblings(where) {
  * @return {Array<string>}
  */
 function findError(where) {
+    /*
     var result = [];
 
     for (var i = 0; i < where.childNodes.length; i++) {
@@ -68,6 +68,7 @@ function findError(where) {
     }
 
     return result;
+    */
 }
 
 /**
@@ -161,7 +162,7 @@ function observeChildNodes(where, fn) {
 export {
     createDivWithText,
     createAWithHref,
-    prepend,
+    //prepend,
     findAllPSiblings,
     findError,
     deleteTextNodes,
