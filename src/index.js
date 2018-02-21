@@ -31,13 +31,11 @@ function createAWithHref(hrefValue) {
  * @param {Element} what - что вставлять
  * @param {Element} where - куда вставлять
  */
+
+
 function prepend(what, where) {
-
-    //var wrap = document.querySelector(where);
-    where.insertBefore(what, where.children[0]);
-
+    where.insertBefore(what, where.firstChild);
 }
-prepend("<li>hello</li>", ".hints")
 /**
  * Функция должна перебрать все дочерние элементы элемента where
  * и вернуть массив, состоящий из тех дочерних элементов
