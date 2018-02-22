@@ -125,6 +125,32 @@ function deleteTextNodes(where) {
  * должно быть преобразовано в <span><div><b></b></div><p></p></span>
  */
 function deleteTextNodesRecursive(where) {
+
+    function recursion(elem) {
+        console.log("текущий элемент " + elem.tagName)
+        console.log("количество нодов: " + elem.childNodes.length)
+
+        for (let i=0; i < elem.childNodes.length; i++) {
+            console.log("текущее  i: " + i)
+            console.log(elem.childNodes[i]);
+            if (elem.childNodes[i].nodeType == 1) {
+                let thisNode = elem.childNodes[i];
+                if (thisNode.children.length > 0 ) {
+                    console.log("у этого элемента внутри что-то есть"); // в этот момент мы должны записать текущий элемент и вызвать рекурсий относительно него
+                    console.log(thisNode);
+                    recursion(thisNode);
+                }
+            }
+
+            if (elem.childNodes[i].nodeType == 3) {
+                let thisNode = elem.childNodes[i];
+                elem.removeChild(thisNode);
+            }
+        }
+
+
+    }
+    recursion(where);
 }
 
 /**

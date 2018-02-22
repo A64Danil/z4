@@ -206,38 +206,30 @@ function deleteTextNodes(where) {
  */
 function deleteTextNodesRecursive(where) {
     var my = document.querySelector(where);
-    let i = 0;
 
     function recursion(elem) {
         console.log("текущий элемент " + elem.tagName)
-        console.log("текущее  i: " + i)
+        console.log("количество нодов: " + elem.childNodes.length)
 
-        if (elem.childNodes[i] != elem.lastElementChild) {
-
+        for (let i=0; i < elem.childNodes.length; i++) {
+            console.log("текущее  i: " + i)
+            console.log(elem.childNodes[i]);
             if (elem.childNodes[i].nodeType == 1) {
                 let thisNode = elem.childNodes[i];
-                //console.log(thisNode);
-                   if (thisNode.children.length > 0 ) {
-                       console.log("у этого элемента внутри что-то есть"); // в этот момент мы должны записать текущий элемент и вызвать рекурсий относительно него
-                       console.log(thisNode);
-                       i++;
-                       recursion(thisNode);
-                    }
+                if (thisNode.children.length > 0 ) {
+                    console.log("у этого элемента внутри что-то есть"); // в этот момент мы должны записать текущий элемент и вызвать рекурсий относительно него
+                    console.log(thisNode);
+                    recursion(thisNode);
+                }
             }
 
-            /*
-            if (where.childNodes[i].nodeType == 3) {
-                let thisNode = where.childNodes[i];
-                where.removeChild(thisNode);
-            } */
+           if (elem.childNodes[i].nodeType == 3) {
+                let thisNode = elem.childNodes[i];
+                elem.removeChild(thisNode);
+            }
+        }    
 
-            i++;
-            recursion(elem);
-        }
-        else
-        {
-            console.log(i + "i(последний): " + (elem.childNodes[i] == elem.lastElementChild));
-        }
+
     }
     recursion(my);
 }
