@@ -210,8 +210,7 @@ function deleteTextNodesRecursive(where) {
     function recursion(elem) {
         console.log("текущий элемент " + elem.tagName)
         console.log("количество нодов: " + elem.childNodes.length)
-
-        for (let i=0; i < elem.childNodes.length; i++) {
+        for (let i=(elem.childNodes.length - 1); i > 0; i--) {
             console.log("текущее  i: " + i)
             console.log(elem.childNodes[i]);
             if (elem.childNodes[i].nodeType == 1) {
@@ -225,6 +224,8 @@ function deleteTextNodesRecursive(where) {
 
            if (elem.childNodes[i].nodeType == 3) {
                 let thisNode = elem.childNodes[i];
+                console.log("Удаленный узел: " + thisNode.nodeValue);
+                console.log("количество нодов: " + elem.childNodes.length)
                 elem.removeChild(thisNode);
             }
         }    
