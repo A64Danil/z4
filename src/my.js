@@ -153,5 +153,93 @@ findError(".hints");
  * после выполнения функции, дерево <div></div>привет<p></p>loftchool!!!
  * должно быть преобразовано в <div></div><p></p>
  */
+
+/*
+
+ function  testCount(elem) {
+ var my = document.querySelector(elem);
+ console.log(my.childNodes)
+ console.log(my.childNodes.length)
+ console.log(my.children)
+ console.log(my.children.length)
+ }
+
+ testCount(".hints");
+
+
+
+
+
+ function  test(elem) {
+ var my = document.querySelector(elem);
+ for (let i=0; i < my.childNodes.length; i++) {
+ if (my.childNodes[i].nodeType == 3) {
+ let thisNode = my.childNodes[i];
+ my.removeChild(thisNode);
+ console.log("Мы нашли текстовый узел")
+ }
+ console.log(my.childNodes[i].nodeType)
+ }
+ }
+
+ test(".hints");
+ */
 function deleteTextNodes(where) {
+    for (let i=0; i < where.childNodes.length; i++) {
+        if (where.childNodes[i].nodeType == 3) {
+            let thisNode = where.childNodes[i];
+            where.removeChild(thisNode);
+        }
+    }
+
 }
+
+/**
+ * Выполнить предудыщее задание с использование рекурсии
+ * то есть необходимо заходить внутрь каждого дочернего элемента
+ *
+ * @param {Element} where - где искать
+ *
+ * @example
+ * после выполнения функции, дерево <span> <div> <b>привет</b> </div> <p>loftchool</p> !!!</span>
+ * должно быть преобразовано в <span><div><b></b></div><p></p></span>
+ */
+function deleteTextNodesRecursive(where) {
+    var my = document.querySelector(where);
+    let i = 0;
+
+    function recursion(elem) {
+        console.log("текущий элемент " + elem.tagName)
+        console.log("текущее  i: " + i)
+
+        if (elem.childNodes[i] != elem.lastElementChild) {
+
+            if (elem.childNodes[i].nodeType == 1) {
+                let thisNode = elem.childNodes[i];
+                //console.log(thisNode);
+                   if (thisNode.children.length > 0 ) {
+                       console.log("у этого элемента внутри что-то есть"); // в этот момент мы должны записать текущий элемент и вызвать рекурсий относительно него
+                       console.log(thisNode);
+                       i++;
+                       recursion(thisNode);
+                    }
+            }
+
+            /*
+            if (where.childNodes[i].nodeType == 3) {
+                let thisNode = where.childNodes[i];
+                where.removeChild(thisNode);
+            } */
+
+            i++;
+            recursion(elem);
+        }
+        else
+        {
+            console.log(i + "i(последний): " + (elem.childNodes[i] == elem.lastElementChild));
+        }
+    }
+    recursion(my);
+}
+
+deleteTextNodesRecursive(".hints")

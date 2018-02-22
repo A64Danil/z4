@@ -106,8 +106,14 @@ function findError(where) {
  * должно быть преобразовано в <div></div><p></p>
  */
 function deleteTextNodes(where) {
-}
+    for (let i=0; i < where.childNodes.length; i++) {
+        if (where.childNodes[i].nodeType == 3) {
+            let thisNode = where.childNodes[i];
+            where.removeChild(thisNode);
+        }
+    }
 
+}
 /**
  * Выполнить предудыщее задание с использование рекурсии
  * то есть необходимо заходить внутрь каждого дочернего элемента
