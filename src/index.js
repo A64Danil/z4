@@ -177,6 +177,62 @@ function deleteTextNodesRecursive(where) {
  * }
  */
 function collectDOMStat(root) {
+    //var my = document.querySelector(root);
+    var obj = {
+        classes: {},
+        tags: {},
+        texts: 0
+    }
+
+    function recursion(elem, i = 0) {
+        let thisNode = elem.childNodes[i];
+
+
+        if (i == elem.childNodes.length) {
+            return;
+        }
+
+        if (thisNode.nodeType == 1) {
+            //console.log("текущий элемент " + elem.tagName, "текущее  i: " + i, "текущий элемент (ниже, если он не текстовый)")
+            //if  (thisNode.tagName == "P") console.warn("нашли P");
+
+            for (let y = 0; y < thisNode.classList.length; y++) {
+                //console.log(thisNode.classList[y]);
+                if  (obj.classes.hasOwnProperty(thisNode.classList[y])) {
+                    console.log("есть такой класс");
+                    obj.classes[thisNode.classList[y]] += 1;
+                }
+                else {
+                    obj.classes[thisNode.classList[y]] = 1;
+                    console.log("такого класса нет, добавили " + thisNode.classList[y]);
+                }
+
+            }
+
+            if (thisNode.childNodes.length > 0 ) {
+                //console.log("у этого элемента внутри что-то есть, входим во внутрь");
+                if  (obj.tags.hasOwnProperty(thisNode.tagName)) { //console.log("есть такое свойство");
+                    obj.tags[thisNode.tagName] += 1;
+                }
+                else {
+                    obj.tags[thisNode.tagName] = 1;
+                    console.log("такого свойства нет, добавили " + thisNode.tagName);
+                }
+
+
+                recursion(thisNode);
+            }
+        }
+        else {
+            //console.log("Текстовый узел: " + thisNode.nodeValue);
+            obj.texts += 1;
+        }
+
+        i++;
+        recursion(elem, i);
+    }
+    recursion(root);
+    return obj;
 }
 
 /**
