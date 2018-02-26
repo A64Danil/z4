@@ -206,33 +206,67 @@ function deleteTextNodes(where) {
  */
 function deleteTextNodesRecursive(where) {
     var my = document.querySelector(where);
+    var i;
 
-    function recursion(elem) {
-        console.log("текущий элемент " + elem.tagName)
-        console.log("количество нодов: " + elem.childNodes.length)
-        for (let i=(elem.childNodes.length - 1); i > 0; i--) {
-            console.log("текущее  i: " + i)
-            console.log(elem.childNodes[i]);
-            if (elem.childNodes[i].nodeType == 1) {
-                let thisNode = elem.childNodes[i];
-                if (thisNode.children.length > 0 ) {
-                    console.log("у этого элемента внутри что-то есть"); // в этот момент мы должны записать текущий элемент и вызвать рекурсий относительно него
-                    console.log(thisNode);
-                    recursion(thisNode);
-                }
+    function recursion(elem, i = 0) {
+
+        let thisNode = elem.childNodes[i];
+
+        console.log("текущий элемент " + elem.tagName, "текущее  i: " + i, "текущий элемент (ниже, если он не текстовый)")
+        //console.log("количество нодов: " + elem.childNodes.length)
+        console.log(thisNode);
+
+
+        if (i == elem.childNodes.length) {
+            console.log("количество нодов равно текущей итерации i, возвращаемся наверх");
+            return;
+        }
+
+        if (elem.childNodes[i].nodeType == 1) {
+            if (thisNode.childNodes.length > 0 ) {
+                console.log("у этого элемента внутри что-то есть, входим во внутрь"); // в этот момент мы должны записать текущий элемент и вызвать рекурсий относительно него
+                i++;
+                recursion(thisNode);
             }
-
-           if (elem.childNodes[i].nodeType == 3) {
-                let thisNode = elem.childNodes[i];
-                console.log("Удаленный узел: " + thisNode.nodeValue);
-                console.log("количество нодов: " + elem.childNodes.length)
-                elem.removeChild(thisNode);
-            }
-        }    
-
-
+        }
+        else {
+            console.log("Удаленный узел: " + thisNode.nodeValue);
+            elem.removeChild(thisNode);
+        }
+        //console.log("новое  i: " + i)
+        recursion(elem, i);
     }
     recursion(my);
 }
+deleteTextNodesRecursive(".hints");
 
-deleteTextNodesRecursive(".hints")
+function CLEARdeleteTextNodesRecursive(where) {
+    var i;
+
+    function recursion(elem, i = 0) {
+
+        let thisNode = elem.childNodes[i];
+
+        console.log("текущий элемент " + elem.tagName, "текущее  i: " + i, "текущий элемент (ниже, если он не текстовый)")
+        console.log(thisNode);
+
+
+        if (i == elem.childNodes.length) {
+            return;
+        }
+
+        if (elem.childNodes[i].nodeType == 1) {
+            if (thisNode.childNodes.length > 0 ) {
+                console.log("у этого элемента внутри что-то есть, входим во внутрь");
+                i++;
+                recursion(thisNode);
+            }
+        }
+        else {
+            console.log("Удаленный узел: " + thisNode.nodeValue);
+            elem.removeChild(thisNode);
+        }
+        recursion(elem, i);
+    }
+    recursion(where);
+}

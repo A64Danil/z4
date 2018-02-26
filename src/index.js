@@ -125,35 +125,34 @@ function deleteTextNodes(where) {
  * должно быть преобразовано в <span><div><b></b></div><p></p></span>
  */
 function deleteTextNodesRecursive(where) {
+    var i;
+    function recursion(elem, i = 0) {
 
-    function recursion(elem) {
-        console.log("текущий элемент " + elem.tagName)
-        console.log("количество нодов: " + elem.childNodes.length)
-        for (let i=(elem.childNodes.length - 1); i > 0; i--) {
-            console.log("текущее  i: " + i)
-            console.log(elem.childNodes[i]);
-            if (elem.childNodes[i].nodeType == 1) {
-                let thisNode = elem.childNodes[i];
-                if (thisNode.children.length > 0 ) {
-                    console.log("у этого элемента внутри что-то есть"); // в этот момент мы должны записать текущий элемент и вызвать рекурсий относительно него
-                    console.log(thisNode);
-                    recursion(thisNode);
-                }
-            }
+        let thisNode = elem.childNodes[i];
 
-            if (elem.childNodes[i].nodeType == 3) {
-                let thisNode = elem.childNodes[i];
-                console.log("Удаленный узел: " + thisNode.nodeValue);
-                console.log("количество нодов: " + elem.childNodes.length)
-                elem.removeChild(thisNode);
-            }
+        console.log("текущий элемент " + elem.tagName, "текущее  i: " + i, "текущий элемент (ниже, если он не текстовый)")
+        console.log(thisNode);
+
+
+        if (i == elem.childNodes.length) {
+            return;
         }
 
-
+        if (elem.childNodes[i].nodeType == 1) {
+            if (thisNode.childNodes.length > 0 ) {
+                console.log("у этого элемента внутри что-то есть, входим во внутрь");
+                i++;
+                recursion(thisNode);
+            }
+        }
+        else {
+            console.log("Удаленный узел: " + thisNode.nodeValue);
+            elem.removeChild(thisNode);
+        }
+        recursion(elem, i);
     }
     recursion(where);
 }
-
 
 /**
  * *** Со звездочкой ***
