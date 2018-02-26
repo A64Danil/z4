@@ -270,3 +270,67 @@ function CLEARdeleteTextNodesRecursive(where) {
     }
     recursion(where);
 }
+
+/**
+ * *** Со звездочкой ***
+ * Необходимо собрать статистику по всем узлам внутри элемента root и вернуть ее в виде объекта
+ * Статистика должна содержать:
+ * - количество текстовых узлов
+ * - количество элементов каждого класса
+ * - количество элементов каждого тега
+ * Для работы с классами рекомендуется использовать свойство classList
+ * Постарайтесь не создавать глобальных переменных
+ *
+ * @param {Element} root - где собирать статистику
+ * @return {{tags: Object<string, number>, classes: Object<string, number>, texts: number}}
+ *
+ * @example
+ * для html <div class="some-class-1"><b>привет!</b> <b class="some-class-1 some-class-2">loftschool</b></div>
+ * должен быть возвращен такой объект:
+ * {
+ *   tags: { DIV: 1, B: 2},
+ *   classes: { "some-class-1": 2, "some-class-2": 1 },
+ *   texts: 3
+ * }
+ */
+function collectDOMStat(root) {
+    var my = document.querySelector(root);
+    var objTags;
+    var objclasses;
+    var obj = {
+        tags: objTags,
+        classes: objclasses,
+        texts: 0
+    }
+    console.log(my.childNodes);
+
+    function recursion(elem, i = 0) {
+
+        let thisNode = elem.childNodes[i];
+
+       // console.log("текущий элемент " + elem.tagName, "текущее  i: " + i, "текущий элемент (ниже, если он не текстовый)")
+        //console.log(thisNode);
+
+
+        if (i == elem.childNodes.length) {
+            return;
+        }
+
+        if (elem.childNodes[i].nodeType == 1) {
+            if (thisNode.childNodes.length > 0 ) {
+                //console.log("у этого элемента внутри что-то есть, входим во внутрь");
+                recursion(thisNode);
+            }
+        }
+        else {
+            console.log("Текстовый узел: " + thisNode.nodeValue);
+            obj.texts += 1;
+        }
+
+        i++;
+        recursion(elem, i);
+    }
+    recursion(my);
+    return obj;
+}
+collectDOMStat(".hints");
