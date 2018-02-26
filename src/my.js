@@ -295,35 +295,43 @@ function CLEARdeleteTextNodesRecursive(where) {
  */
 function collectDOMStat(root) {
     var my = document.querySelector(root);
-    var objTags;
-    var objclasses;
     var obj = {
-        tags: objTags,
-        classes: objclasses,
+        classes: {},
+        tags: {},
         texts: 0
     }
+
+
     console.log(my.childNodes);
 
     function recursion(elem, i = 0) {
-
         let thisNode = elem.childNodes[i];
-
        // console.log("текущий элемент " + elem.tagName, "текущее  i: " + i, "текущий элемент (ниже, если он не текстовый)")
         //console.log(thisNode);
-
 
         if (i == elem.childNodes.length) {
             return;
         }
 
-        if (elem.childNodes[i].nodeType == 1) {
+        if (thisNode.nodeType == 1) {
+            //console.log("текущий элемент " + elem.tagName, "текущее  i: " + i, "текущий элемент (ниже, если он не текстовый)")
+            //if  (thisNode.tagName == "P") console.warn("нашли P");
+            //obj.tags
             if (thisNode.childNodes.length > 0 ) {
                 //console.log("у этого элемента внутри что-то есть, входим во внутрь");
+                if  (obj.tags.hasOwnProperty(thisNode.tagName)) {
+                    obj.tags[thisNode.tagName] += 1;
+                    console.log("есть такое свойство");
+                }
+                else {
+                    obj.tags[thisNode.tagName] = 1;
+                    console.log("такого свойства нет");
+                }
                 recursion(thisNode);
             }
         }
         else {
-            console.log("Текстовый узел: " + thisNode.nodeValue);
+            //console.log("Текстовый узел: " + thisNode.nodeValue);
             obj.texts += 1;
         }
 
