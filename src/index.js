@@ -65,7 +65,7 @@ function findAllPSiblings(where) {
         }
         else
         {
-            console.log(i + "i(последний): " + (where.children[i] == where.lastElementChild));
+            //console.log(i + "i(последний): " + (where.children[i] == where.lastElementChild));
         }
     }
     recursion();
@@ -83,7 +83,7 @@ function findAllPSiblings(where) {
  */
 function findError(where) {
     var result = [];
-    console.log(where.children.length);
+    //console.log(where.children.length);
     for (var i = 0; i < where.children.length; i++) {
         result.push(where.children[i].innerText);
     }
@@ -130,8 +130,8 @@ function deleteTextNodesRecursive(where) {
 
         let thisNode = elem.childNodes[i];
 
-        console.log("текущий элемент " + elem.tagName, "текущее  i: " + i, "текущий элемент (ниже, если он не текстовый)")
-        console.log(thisNode);
+        //console.log("текущий элемент " + elem.tagName, "текущее  i: " + i, "текущий элемент (ниже, если он не текстовый)")
+        //console.log(thisNode);
 
 
         if (i == elem.childNodes.length) {
@@ -140,13 +140,13 @@ function deleteTextNodesRecursive(where) {
 
         if (elem.childNodes[i].nodeType == 1) {
             if (thisNode.childNodes.length > 0 ) {
-                console.log("у этого элемента внутри что-то есть, входим во внутрь");
+                //console.log("у этого элемента внутри что-то есть, входим во внутрь");
                 i++;
                 recursion(thisNode);
             }
         }
         else {
-            console.log("Удаленный узел: " + thisNode.nodeValue);
+           // console.log("Удаленный узел: " + thisNode.nodeValue);
             elem.removeChild(thisNode);
         }
         recursion(elem, i);
@@ -199,12 +199,12 @@ function collectDOMStat(root) {
             for (let y = 0; y < thisNode.classList.length; y++) {
                 //console.log(thisNode.classList[y]);
                 if  (obj.classes.hasOwnProperty(thisNode.classList[y])) {
-                    console.log("есть такой класс");
+                    //console.log("есть такой класс");
                     obj.classes[thisNode.classList[y]] += 1;
                 }
                 else {
                     obj.classes[thisNode.classList[y]] = 1;
-                    console.log("такого класса нет, добавили " + thisNode.classList[y]);
+                    //console.log("такого класса нет, добавили " + thisNode.classList[y]);
                 }
 
             }
@@ -216,7 +216,7 @@ function collectDOMStat(root) {
                 }
                 else {
                     obj.tags[thisNode.tagName] = 1;
-                    console.log("такого свойства нет, добавили " + thisNode.tagName);
+                    //console.log("такого свойства нет, добавили " + thisNode.tagName);
                 }
 
 
@@ -267,6 +267,38 @@ function collectDOMStat(root) {
  * }
  */
 function observeChildNodes(where, fn) {
+
+
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if ( mutation.type == 'childList' ) {
+
+                if (mutation.addedNodes.length >= 1) {
+                    let obj = {
+                        type: "insert",
+                        nodes: [...mutation.addedNodes]
+                    };
+                    fn(obj);
+                    console.log(obj);
+
+                }
+
+                if (mutation.removedNodes.length >= 1) {
+                    let obj = {
+                        type: 'remove',
+                        nodes: [...mutation.removedNodes]
+                    };
+                    fn(obj);
+                    console.log(obj); // <=== Почему не срабатывает?? =(
+
+                }
+            }
+        });
+    });
+
+    var config = { attributes: true, childList: true, characterData: true, subtree: true };
+
+    observer.observe(where, config);
 }
 
 export {
@@ -278,5 +310,5 @@ export {
     deleteTextNodes,
     deleteTextNodesRecursive,
     collectDOMStat,
-    //observeChildNodes
+    observeChildNodes
 };
