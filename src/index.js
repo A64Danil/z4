@@ -289,7 +289,7 @@ function observeChildNodes(where, fn) {
                         nodes: [...mutation.removedNodes]
                     };
                     fn(obj);
-                    console.log(obj); // <=== Почему не срабатывает?? =(
+                    console.log(obj); // <=== Почему не срабатывает если "nodes: mutation.removedNodes"  ?? =(
 
                 }
             }
